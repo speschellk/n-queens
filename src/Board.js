@@ -97,7 +97,6 @@
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-
       var chessBoard = this.attributes;
 
       // iterate through each rowIndex
@@ -110,7 +109,7 @@
         }
       }
       // defaults to false value;
-      return false; // fixme
+      return false;
     },
 
 
@@ -120,12 +119,42 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // counts the men in the column at the index passed in
+      var chessBoard = this.attributes;
+
+      var count = 0;
+
+      // for each row in the chessBoard:
+      for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
+        // add value at colIndex to count
+        count += chessBoard[i][colIndex];
+        console.log('count is ' + count);
+        console.log('chessBoard is ' + chessBoard[i][colIndex]);
+      }
+      if (count > 1) {
+        return true;
+      }
+
+      return false;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var chessBoard = this.attributes;
+
+      // see if any of the colIndices in the chessBoard result in 'true' when passed into hasColConflictAt()
+      // iterate through the array of chessBoard keys
+      //if (chessBoard === undefined) { debugger; }
+      for (var i = 0; i < chessBoard['n']; i++) {
+        // if (chessBoard === undefined) { debugger; }
+        var context = this;
+        // run the hasColConflictAt test at each index
+        if (context.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
