@@ -128,8 +128,6 @@
       for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
         // add value at colIndex to count
         count += chessBoard[i][colIndex];
-        console.log('count is ' + count);
-        console.log('chessBoard is ' + chessBoard[i][colIndex]);
       }
       if (count > 1) {
         return true;
@@ -163,15 +161,51 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    hasMajorDiagonalConflictAt: function(
+      majorDiagonalColumnIndexAtFirstRow) {
+      // majorDiagonalColumnIndexAtFirstRow = colIndex - rowIndex
+
+      var count = 0;
+      var chessBoard = this.attributes;
+
+      //counts sum of values in major diagonals
+      if (majorDiagonalColumnIndexAtFirstRow === -2) {
+        count = chessBoard[2][0] + chessBoard[3][1];
+      } else if (majorDiagonalColumnIndexAtFirstRow === -1) {
+        count = chessBoard[1][0] + chessBoard[2][1] + chessBoard[3][2];
+      } else if (majorDiagonalColumnIndexAtFirstRow === 0) {
+        count = chessBoard[0][0] + chessBoard[1][1] + chessBoard[2][2] + chessBoard[3][3];
+      } else if (majorDiagonalColumnIndexAtFirstRow === 1) {
+        count = chessBoard[0][1] + chessBoard[1][2] + chessBoard[2][3];
+      } else if (majorDiagonalColumnIndexAtFirstRow === 2) {
+        count = chessBoard[0][2] + chessBoard[1][3];
+      }
+
+      // return true if counted more than one man on the diagonal
+      if (count > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
-    },
+      var chessBoard = this.attributes;
 
+      // check if hasMajorDiagonalConflictAt (index) is true
+      // i = rowIndex
+      for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
+        // j = colIndex
+        for (var j = 0; j < chessBoard[i].length; j++) {
+          // if get 'true' result in helper function, there is a majDiag conflict
+          if (this.hasMajorDiagonalConflictAt(j - i) === true) {
+            return true;
+          }
+        }
+      } 
+
+      return false;
+    },
 
 
     // Minor Diagonals - go from top-right to bottom-left
