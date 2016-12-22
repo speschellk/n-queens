@@ -21,14 +21,14 @@ window.findNRooksSolution = function(n) {
     4. 
   */
   
-  // var solution = undefined; //fixme
+  var solution = [];
 
   /*========================================================================
     SET BOARD
     make a chess board composed of n rows and n columns filled with 0s
   =========================================================================*/
 
-  var chessBoard = [];
+  var emptyBoard = [];
   var row = [];
 
   // iterates through n rows
@@ -40,51 +40,76 @@ window.findNRooksSolution = function(n) {
       row.push(0);
     }
     // adds complete row of zeroes to empty board
-    chessBoard.push(row);
+    emptyBoard.push(row);
     // prepares row variable to create a new row
     row = [];
   }
 
-  // var board = new Board(chessBoard);
-  var board = new Board([[0,0,0],[0,0,0],[0,0,0],[0,0,0]]);
+  var newBoard = new Board(emptyBoard);
+  var chessBoard = newBoard.attributes;
+  console.log('newBoard is ', newBoard);
+  console.log('chessboard is ', chessBoard);
 
 
-  /*========================================================================
+  /*=========================================================================================
     SET TRACKERS
     make a row index array and a column index array to track squares available to place rooks
-  ========================================================================*/
+  ==========================================================================================*/
   
   // stores row indices still available for placing men
-  var rows = [];
+  var rowTracker = [];
   for (i = 0; i < n; i++) {
-    rows.push(i);
+    rowTracker.push(i);
   }
   // stores column indices still available for placing men
-  var cols = [];
+  var colTracker = [];
   for (i = 0; i < n; i++) {
-    cols.push(i);
+    colTracker.push(i);
   }
 
-  /*========================================================================
+  console.log('rowTracker is ', rowTracker);
+  console.log('colTracker is ', colTracker);
+
+  /*=========================================================================================
     ADD FIRST ROOK
     find a placement for the first rook
-  ========================================================================*/
+  ==========================================================================================*/
 
-  var firstRow = chessBoard[0];
+  // switches origin square from 0 to 1 ('places rook at origin')
+  //debugger;
+  var rookPlacer = function() {
+    // base case:  
+    // if row tracker length is zero, arrived at solution
+    if (rowTracker.length === 0) {
+      // get rid of extra 'n' key in chessBoard object
+      delete chessBoard.n;
+      // push each array ('board row') into solution array
+      for (var key in chessBoard) {
+        solution.push(chessBoard[key]); 
+      }
+      // return solution board;
+      return solution;
+    }
+    // toggles piece ('adds rook') at first available rowIndex and colIndex
+    newBoard.togglePiece(rowTracker[0], colTracker[0]);
+    // remove rowIndex from row tracker
+    rowTracker = rowTracker.slice(1);
+    // remove colIndex from column tracker
+    colTracker = colTracker.slice(1);
 
-  // iterates through column indices in first row
-  for (var i = 0; i < n; i++) {
-    // resets value at index i to 1 (places 'rook' on board)
-    // firstRow[i] = 1;
-    // removes index value from rows and columns trackers
-  }
-  // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  // return solution;
+    // call rookPlacer again
+    rookPlacer();
+  };
+  rookPlacer();
+
+  return solution;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = 1; //fixme
+  // solution is equivalent to n!, since each rook placed on
+  // the board will yield another n-1 options for permutations
+  var solutionCount = 1;
   if (n === 1) {
     solutionCount = solutionCount;
   } else {
