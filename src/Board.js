@@ -102,9 +102,7 @@
       // iterate through each rowIndex
       for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
         // hasRowConflictAt uses each key of chessBoard as rowIndex
-        var context = this;
-        //debugger;
-        if (context.hasRowConflictAt(i)) {
+        if (this.hasRowConflictAt(i)) {
           return true;
         }
       }
@@ -142,12 +140,9 @@
 
       // see if any of the colIndices in the chessBoard result in 'true' when passed into hasColConflictAt()
       // iterate through the array of chessBoard keys
-      //if (chessBoard === undefined) { debugger; }
       for (var i = 0; i < chessBoard['n']; i++) {
-        // if (chessBoard === undefined) { debugger; }
-        var context = this;
         // run the hasColConflictAt test at each index
-        if (context.hasColConflictAt(i)) {
+        if (this.hasColConflictAt(i)) {
           return true;
         }
       }
@@ -253,7 +248,7 @@
           }
         }
       } 
-      return false; // fixme
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
