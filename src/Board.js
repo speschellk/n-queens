@@ -213,11 +213,46 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // minorDiagonalColumnIndexAtFirstRow = colIndex + rowIndex
+
+      var count = 0;
+      var chessBoard = this.attributes;
+
+      //counts sum of values in major diagonals
+      if (minorDiagonalColumnIndexAtFirstRow === 1) {
+        count = chessBoard[0][1] + chessBoard[1][0];
+      } else if (minorDiagonalColumnIndexAtFirstRow === 2) {
+        count = chessBoard[0][2] + chessBoard[1][1] + chessBoard[2][0];
+      } else if (minorDiagonalColumnIndexAtFirstRow === 3) {
+        count = chessBoard[0][3] + chessBoard[1][2] + chessBoard[2][1] + chessBoard[3][0];
+      } else if (minorDiagonalColumnIndexAtFirstRow === 4) {
+        count = chessBoard[1][3] + chessBoard[2][2] + chessBoard[3][1];
+      } else if (minorDiagonalColumnIndexAtFirstRow === 5) {
+        count = chessBoard[2][3] + chessBoard[3][2];
+      }
+
+      // return true if counted more than one man on the diagonal
+      if (count > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var chessBoard = this.attributes;
+
+      // check if hasMinorDiagonalConflictAt (index) is true
+      // i = rowIndex
+      for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
+        // j = colIndex
+        for (var j = 0; j < chessBoard[i].length; j++) {
+          // if get 'true' result in helper function, there is a majDiag conflict
+          if (this.hasMinorDiagonalConflictAt(j + i) === true) {
+            return true;
+          }
+        }
+      } 
       return false; // fixme
     }
 
