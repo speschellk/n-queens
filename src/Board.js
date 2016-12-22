@@ -7,6 +7,7 @@
   window.Board = Backbone.Model.extend({
 
     initialize: function (params) {
+      //if we don't have params, get ready for error messages
       if (_.isUndefined(params) || _.isNull(params)) {
         console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
         console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
@@ -79,11 +80,36 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var count = 0;
+      //find the row
+      var row = this.attributes[rowIndex];
+      //iterate through the row
+      for (var i = 0; i < row.length; i++) {
+        //sum the values at each position
+        count += row[i];
+      }
+      //if conflicts, count should be 2 or greater
+      if (count > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+
+      var chessBoard = this.attributes;
+
+      // iterate through each rowIndex
+      for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
+        // hasRowConflictAt uses each key of chessBoard as rowIndex
+        var context = this;
+        //debugger;
+        if (context.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
+      // defaults to false value;
       return false; // fixme
     },
 
