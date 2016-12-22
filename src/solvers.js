@@ -23,10 +23,10 @@ window.findNRooksSolution = function(n) {
   
   // var solution = undefined; //fixme
 
-  /************************************************************************
+  /*========================================================================
     SET BOARD
     make a chess board composed of n rows and n columns filled with 0s
-  *************************************************************************/
+  ========================================================================*/
 
   var chessBoard = [];
   var row = [];
@@ -47,10 +47,10 @@ window.findNRooksSolution = function(n) {
   console.log('chessBoard is ', chessBoard);
 
 
-  /*************************************************************************
+  /*========================================================================
     SET TRACKERS
     make a row index array and a column index array to track squares available to place rooks
-  *************************************************************************/
+  ========================================================================*/
   
   // stores row indices still available for placing men
   var rows = [];
@@ -63,15 +63,18 @@ window.findNRooksSolution = function(n) {
     cols.push(i);
   }
 
-  /*************************************************************************
+  /*========================================================================
     ADD FIRST ROOK
     find a placement for the first rook
-  *************************************************************************/
+  ========================================================================*/
 
   var firstRow = chessBoard[0];
 
+  // iterates through column indices in first row
   for (var i = 0; i < n; i++) {
-    firstRow[i] = 1;
+    // resets value at index i to 1 (places 'rook' on board)
+    // firstRow[i] = 1;
+    // removes index value from rows and columns trackers
   }
   // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   // return solution;

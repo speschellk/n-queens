@@ -72,13 +72,16 @@
 
  */
     /*=========================================================================
-    =                 TODO: fill in these Helper Functions                    =
+    =                             Helper Functions                    =
     =========================================================================*/
 
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    //
+    // Time complexity - O(n)
+    // Complexity is linear because it iterates through all row indices, n
     hasRowConflictAt: function(rowIndex) {
       var count = 0;
       //find the row
@@ -96,6 +99,9 @@
     },
 
     // test if any rows on this board contain conflicts
+    //
+    // Time complexity - O(n)
+    // Complexity is linear because it iterates through all row indices, n
     hasAnyRowConflicts: function() {
       var chessBoard = this.attributes;
 
@@ -116,15 +122,17 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
+    //
+    // Time complexity - O(n)
+    // Complexity is linear because it iterates through all columns, n
     hasColConflictAt: function(colIndex) {
-      // counts the men in the column at the index passed in
       var chessBoard = this.attributes;
-
+      // counts the men in the column at the index passed in
       var count = 0;
 
       // for each row in the chessBoard:
       for (var i = 0; i < Object.keys(chessBoard).length - 1; i++) {
-        // add value at colIndex to count
+        // adds value at colIndex to count
         count += chessBoard[i][colIndex];
       }
       if (count > 1) {
@@ -135,6 +143,9 @@
     },
 
     // test if any columns on this board contain conflicts
+    //
+    // Time complexity - O(n)
+    // Complexity is linear because it iterates through all columns, n
     hasAnyColConflicts: function() {
       var chessBoard = this.attributes;
 
@@ -156,6 +167,9 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
+    //
+    // Time complexity - O(1)
+    // Complexity is constant because it employs a simple'if' check on the argument
     hasMajorDiagonalConflictAt: function(
       majorDiagonalColumnIndexAtFirstRow) {
       // majorDiagonalColumnIndexAtFirstRow = colIndex - rowIndex
@@ -184,6 +198,9 @@
     },
 
     // test if any major diagonals on this board contain conflicts
+    //
+    // Time complexity - O(n^2)
+    // Complexity is quadratic because it runs a nested for loop to hit all n^2 squares
     hasAnyMajorDiagonalConflicts: function() {
       var chessBoard = this.attributes;
 
@@ -207,13 +224,16 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
+    //
+    // Time complexity - O(1)
+    // Complexity is constant because it employs a simple 'if' check on the argument
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       // minorDiagonalColumnIndexAtFirstRow = colIndex + rowIndex
 
       var count = 0;
       var chessBoard = this.attributes;
 
-      //counts sum of values in major diagonals
+      // counts sum of values in major diagonals
       if (minorDiagonalColumnIndexAtFirstRow === 1) {
         count = chessBoard[0][1] + chessBoard[1][0];
       } else if (minorDiagonalColumnIndexAtFirstRow === 2) {
@@ -234,6 +254,9 @@
     },
 
     // test if any minor diagonals on this board contain conflicts
+    //
+    // Time complexity - O(n^2)
+    // Complexity is quadratic because it employs a nested for loop to iterate through all n^2 suares
     hasAnyMinorDiagonalConflicts: function() {
       var chessBoard = this.attributes;
 
