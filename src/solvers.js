@@ -26,7 +26,7 @@ window.findNRooksSolution = function(n) {
   /*========================================================================
     SET BOARD
     make a chess board composed of n rows and n columns filled with 0s
-  ========================================================================*/
+  =========================================================================*/
 
   var chessBoard = [];
   var row = [];
@@ -44,7 +44,9 @@ window.findNRooksSolution = function(n) {
     // prepares row variable to create a new row
     row = [];
   }
-  console.log('chessBoard is ', chessBoard);
+
+  // var board = new Board(chessBoard);
+  var board = new Board([[0,0,0],[0,0,0],[0,0,0],[0,0,0]]);
 
 
   /*========================================================================
