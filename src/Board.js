@@ -176,18 +176,54 @@
 
       var count = 0;
       var chessBoard = this.attributes;
+      var numRows = Object.keys(chessBoard).length - 1;
 
       //counts sum of values in major diagonals
       if (majorDiagonalColumnIndexAtFirstRow === -2) {
-        count = chessBoard[2][0] + chessBoard[3][1];
+        if (numRows > 2) {
+          count += chessBoard[2][0];
+        }
+        if (numRows > 3) {
+          count += chessBoard[3][1];
+        }
       } else if (majorDiagonalColumnIndexAtFirstRow === -1) {
-        count = chessBoard[1][0] + chessBoard[2][1] + chessBoard[3][2];
+        if (numRows > 1) {
+          count += chessBoard[1][0];
+        }
+        if (numRows > 2) {
+          count += chessBoard[2][1];
+        }
+        if (numRows > 3) {
+          count += chessBoard[3][2];
+        }
       } else if (majorDiagonalColumnIndexAtFirstRow === 0) {
-        count = chessBoard[0][0] + chessBoard[1][1] + chessBoard[2][2] + chessBoard[3][3];
+        count = chessBoard[0][0];
+        if (numRows > 1) {
+          count += chessBoard[1][1];
+        }
+        if (numRows > 2) {
+          count += chessBoard[2][2];
+        }
+        if (numRows > 3) {
+          count += chessBoard[3][3];
+        }
       } else if (majorDiagonalColumnIndexAtFirstRow === 1) {
-        count = chessBoard[0][1] + chessBoard[1][2] + chessBoard[2][3];
+        if (numRows > 1) {
+          count += chessBoard[0][1];
+        }
+        if (numRows > 2) {
+          count += chessBoard[1][2];
+        }
+        if (numRows > 3) {
+          count += chessBoard[2][3];
+        }
       } else if (majorDiagonalColumnIndexAtFirstRow === 2) {
-        count = chessBoard[0][2] + chessBoard[1][3];
+        if (numRows > 2) {
+          count += chessBoard[0][2];
+        }
+        if (numRows > 3) {
+          count += chessBoard[1][3];
+        }
       }
 
       // return true if counted more than one man on the diagonal
@@ -232,18 +268,43 @@
 
       var count = 0;
       var chessBoard = this.attributes;
+      var numRows = Object.keys(chessBoard).length - 1;
 
       // counts sum of values in major diagonals
       if (minorDiagonalColumnIndexAtFirstRow === 1) {
-        count = chessBoard[0][1] + chessBoard[1][0];
+        if (numRows > 1) {
+          count += chessBoard[0][1];
+          count += chessBoard[1][0];
+        }
       } else if (minorDiagonalColumnIndexAtFirstRow === 2) {
-        count = chessBoard[0][2] + chessBoard[1][1] + chessBoard[2][0];
+        if (numRows > 1) {
+          count += chessBoard[1][1];
+        }
+        if (numRows > 2) {
+          count += chessBoard[0][2];
+          count += chessBoard[2][0];
+        }
       } else if (minorDiagonalColumnIndexAtFirstRow === 3) {
-        count = chessBoard[0][3] + chessBoard[1][2] + chessBoard[2][1] + chessBoard[3][0];
+        if (numRows > 3) {
+          count += chessBoard[0][3];
+          count += chessBoard[3][0];
+        }
+        if (numRows > 2) {
+          count += chessBoard[1][2];
+          count += chessBoard[2][1];
+        }
       } else if (minorDiagonalColumnIndexAtFirstRow === 4) {
-        count = chessBoard[1][3] + chessBoard[2][2] + chessBoard[3][1];
+        if (numRows > 2) {
+          count += chessBoard[2][2];
+        }
+        if (numRows > 3) {
+          count += chessBoard[1][3] + chessBoard[3][1];
+        }
       } else if (minorDiagonalColumnIndexAtFirstRow === 5) {
-        count = chessBoard[2][3] + chessBoard[3][2];
+        if (numRows > 3) {
+          count += chessBoard[2][3];
+          count += chessBoard[3][2];
+        }
       }
 
       // return true if counted more than one man on the diagonal
