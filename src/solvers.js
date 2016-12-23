@@ -126,6 +126,10 @@ window.findNQueensSolution = function(n) {
   if (n === 0) {
     return 1;
   }
+  debugger;
+  if (n === 2 || n === 3) {
+    return 0;
+  }
 
   var solution = [];
 
@@ -153,14 +157,19 @@ window.findNQueensSolution = function(n) {
 
   var newBoard = new Board(emptyBoard);
   var chessBoard = newBoard.attributes;
-  // console.log('newBoard queens is ', newBoard);
-  // console.log('chessboard queens is ', chessBoard);
+  console.log('newBoard queens is ', newBoard);
+  console.log('chessboard queens is ', chessBoard);
 
   /*=========================================================================================
     SET TRACKERS
     make a row index array and a column index array to track squares available to place rooks
   ==========================================================================================*/
-  
+
+  // stores first row column indices
+  var masterRow = [];
+  for (i = 0; i < n; i++) {
+    masterRow.push(i);
+  }
   // stores row indices still available for placing men
   var rowTracker = {};
   for (i = 0; i < n; i++) {
@@ -178,9 +187,9 @@ window.findNQueensSolution = function(n) {
     queenTracker.push('queen');
   }
 
-  console.log(rowTracker);
-  console.log(colTracker);
-  console.log(queenTracker);
+  console.log('initial rowTracker ', rowTracker);
+  console.log('initial colTracker ', colTracker);
+
 
  /*=========================================================================================
     ADD QUEENS
@@ -188,56 +197,81 @@ window.findNQueensSolution = function(n) {
   ==========================================================================================*/
   // debugger;
   var queenPlacer = function() {
-  // for all the columns in first row, do this:
     console.log('running queenPlacer');
-    // if row tracker length is zero, arrived at solution
-    if (rowTracker.length === 0 || colTracker.length === 0) {
-      // get rid of extra 'n' key in chessBoard object
-      delete chessBoard.n;
-      // push each array ('board row') into solution array
-      for (var key in chessBoard) {
-        solution.push(chessBoard[key]); 
+
+    // checks if no more available rows or no more available columns
+    if (Object.keys(rowTracker).length === 0 || Object.keys(colTracker).length === 0) {
+      // checks if all queens placed on board
+      if (queenTracker.length === 0) {
+        // get rid of extra 'n' key in chessBoard object
+        delete chessBoard.n;
+        // push each array ('board row') into solution array
+        for (var key in chessBoard) {
+          solution.push(chessBoard[key]); 
+        }
+        // return solution board;
+        console.log('solution ' + solution);
+        return solution;
+      // no more available rows/columns but haven't placed all the queens
+      } else {
+      // start over.
+      // run it again but tell it to start in the next column, not the origin
       }
-      // return solution board;
-      return solution;
     }
+
+    // for (var m = 0; m < masterRow; m++) {
+
+    // }
     // iterate through all the rows still available to place a queen
     for (var i in rowTracker) {
       // iterate through all the columns still available to place a queen
-      console.log('in rowTracker iterator');
+      console.log('rowTracker value ', rowTracker[i]);
       for (var j in colTracker) {
+        console.log('colTracker value ', colTracker);
         // if major diag conflicts === false && minor diag conlicts === false
         if (!newBoard.hasAnyQueenConflictsOn(rowTracker[i], colTracker[j])) {
+          console.log('made it to no conflict zone');
           // toggle position to 1 value
           newBoard.togglePiece(rowTracker[i], colTracker[j]);
+          console.log('chessBoard ', chessBoard);
+          // check number of queens left to place
           if (queenTracker.length > 1) {
-            queenTracker.slice(1);
+            console.log('queenTracker length > 1');
+            queenTracker = queenTracker.slice(1);
           } else {
+            console.log('queenTracker = []');
             queenTracker = [];
-            console.log('set queenTracker to empty array');
           }
           // remove rowIndex from rowTracker
           delete rowTracker[i];
+          console.log(rowTracker);
           // remove colIndex from colTracker
           delete colTracker[j];
+          console.log(colTracker);
           //break;
         }
       }
-      console.log('before break');
-      //break;
-    }
-    console.log('before queenTracker check');
-    // if more queens to place, call queenPlacer again
-    if (queenTracker.length !== []) {
-      console.log('in queenTracker length check');
+      //break
       queenPlacer();
+    // if more queens to place, call queenPlacer again
+    // if (queenTracker.length > 0) {
+    //   console.log('in queenTracker length > 0 check, function will run again');
+    //   queenPlacer();
+    // } else {
+    //   delete chessBoard.n;
+    //   // push each array ('board row') into solution array
+    //   for (var key in chessBoard) {
+    //     solution.push(chessBoard[key]); 
+    //   }
+      // // return solution board;
+      // return solution;
     }
+    //console.log('solution ', solution);
+    //return solution;
   };
   queenPlacer();
-
-  return solution;
-  console.log('solution ', solution);
 };
+
 
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other

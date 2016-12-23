@@ -11,8 +11,9 @@ describe('solvers', function() {
             return memo + col;
           }, 0);
         }, 0);
-
+        // debugger;
         expect(solutionBoard.get('n')).to.equal(n);
+        // debugger;
         expect(numPieces).to.equal(n);
         expect(solutionBoard.hasAnyRooksConflicts()).to.be.equal(false);
       });
